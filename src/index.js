@@ -3,13 +3,14 @@ const runScript = require('./utils/runScript')
 
 const app = express()
 
+app.use(express.json())
 
 app.post('/run', (req, res) => {
     const lang = req.query.lang
     const code = req.body.code
     if (!lang && !code) {
-        res.status(400).send()
-    } 
+        return res.status(400).send()
+    }
     runScript(lang, code, (data) => {
         res.send(data)
     })
